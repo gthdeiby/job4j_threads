@@ -13,7 +13,7 @@ public class ConsoleProgress implements Runnable {
                 index = index == process.length ? 0 : index;
             }
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Thread.currentThread().interrupt();
         }
     }
 

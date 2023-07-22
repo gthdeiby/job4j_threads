@@ -12,7 +12,14 @@ public class Count {
         this.value++;
     }
 
+<<<<<<< HEAD
     public synchronized int get() {
         return this.value;
     }
 }
+=======
+    public int get() {
+        return this.value;
+    }
+}
+>>>>>>> 9a118ef... 2. JCIP. Настройка библиотеки [#268575]

@@ -13,13 +13,19 @@ public class Count {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     public synchronized int get() {
         return this.value;
     }
 }
 =======
+=======
+>>>>>>> origin/master
     public int get() {
         return this.value;
     }
 }
+<<<<<<< HEAD
 >>>>>>> 9a118ef... 2. JCIP. Настройка библиотеки [#268575]
+=======
+>>>>>>> origin/master

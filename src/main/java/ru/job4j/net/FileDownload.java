@@ -9,7 +9,7 @@ import java.nio.file.Files;
 public class FileDownload {
     public static void main(String[] args) throws Exception {
         var startAt = System.currentTimeMillis();
-        var file = new File("tmp.xml");
+        var file = new File("data/tmp.xml");
         String url = "https://raw.githubusercontent.com/peterarsentev/course_test/master/pom.xml";
         try (var in = new URL(url).openStream();
              var out = new FileOutputStream(file)) {

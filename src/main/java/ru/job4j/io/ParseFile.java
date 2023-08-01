@@ -13,11 +13,12 @@ public final class ParseFile {
 
     public synchronized String getContent(Predicate<Integer> filter) throws IOException {
         StringBuilder output = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))){
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             int data;
             while ((data = reader.read()) > 0) {
-                if (filter.test(data))
-                output.append((char) data);
+                if (filter.test(data)) {
+                    output.append((char) data);
+                }
             }
         }
         return output.toString();

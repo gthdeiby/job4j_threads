@@ -1,6 +1,7 @@
 package ru.job4j.io;
 
 import java.io.*;
+import java.util.function.Predicate;
 
 public final class ParseFile {
 
@@ -10,32 +11,19 @@ public final class ParseFile {
         this.file = file;
     }
 
-    public String getContent() throws IOException {
-        InputStream i = new FileInputStream(file);
-        String output = "";
-        int data;
-        while ((data = i.read()) > 0) {
-            output += (char) data;
-        }
-        return output;
-    }
-
-    public String getContentWithoutUnicode() throws IOException {
-        InputStream i = new FileInputStream(file);
-        String output = "";
-        int data;
-        while ((data = i.read()) > 0) {
-            if (data < 0x80) {
-                output += (char) data;
+    public synchronized String getContent(Predicate<Integer> filter) throws IOException {
+        StringBuilder output = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))){
+            int data;
+            while ((data = reader.read()) > 0) {
+                if (filter.test(data))
+                output.append((char) data);
             }
         }
-        return output;
+        return output.toString();
     }
 
-    public void saveContent(String content) throws IOException {
-        OutputStream o = new FileOutputStream(file);
-        for (int i = 0; i < content.length(); i += 1) {
-            o.write(content.charAt(i));
-        }
+    public synchronized String getContentWithoutUnicode(Predicate<Integer> filter) throws IOException {
+        return getContent(ch -> ch < 0x80);
     }
 }

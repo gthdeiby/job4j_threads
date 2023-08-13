@@ -4,6 +4,7 @@ import ru.job4j.wait.SimpleBlockingQueue;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class ThreadPool {
     private final int size = Runtime.getRuntime().availableProcessors();
@@ -14,7 +15,7 @@ public class ThreadPool {
         for (int i = 0; i < size; i++) {
             Thread thread = new Thread(() -> {
                         try {
-                            tasks.poll();
+                            tasks.poll().run();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                             Thread.currentThread().interrupt();
@@ -32,5 +33,18 @@ public class ThreadPool {
 
     public void shutdown() {
         threads.forEach(Thread::interrupt);
+    }
+
+    public static void main(String[] args) {
+        ThreadPool pool = new ThreadPool();
+        IntStream.range(0, 5).forEach(
+                i -> {
+                    try {
+                        pool.work(new Job(i));
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                });
+        pool.shutdown();
     }
 }
